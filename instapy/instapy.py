@@ -1,6 +1,6 @@
 """OS Modules environ method to get the setup vars from the Environment"""
+import os
 from datetime import datetime
-from os import environ
 
 from random import randint
 from random import sample
@@ -48,7 +48,9 @@ class InstaPy:
                  nogui=False,
                  selenium_local_session=True,
                  use_firefox=False,
-                 page_delay=25):
+                 page_delay=25,
+                 logdir='./logs',
+                 chromedriver_location='./assets/chromedriver'):
 
         if nogui:
             self.display = Display(visible=0, size=(800, 600))
@@ -56,10 +58,13 @@ class InstaPy:
 
         self.browser = None
 
-        self.logFile = open('./logs/logFile.txt', 'a')
+        self.logdir = logdir
+        self.logFile = open(os.path.join(self.logdir, 'logFile.txt'), 'a')
 
-        self.username = username or environ.get('INSTA_USER')
-        self.password = password or environ.get('INSTA_PW')
+        self.chromedriver_location = chromedriver_location
+
+        self.username = username or os.environ.get('INSTA_USER')
+        self.password = password or os.environ.get('INSTA_PW')
         self.nogui = nogui
 
         self.page_delay = page_delay
@@ -125,7 +130,7 @@ class InstaPy:
             self.browser = webdriver.Firefox(firefox_profile=firefox_profile)
 
         else:
-            chromedriver_location = './assets/chromedriver'
+            chromedriver_location = self.chromedriver_location
             chrome_options = Options()
             chrome_options.add_argument('--dns-prefetch-disable')
             chrome_options.add_argument('--no-sandbox')
@@ -323,7 +328,7 @@ class InstaPy:
         self.use_clarifai = enabled
 
         if api_key is None and self.clarifai_api_key is None:
-            self.clarifai_api_key = environ.get('CLARIFAI_API_KEY')
+            self.clarifai_api_key = os.environ.get('CLARIFAI_API_KEY')
         elif api_key is not None:
             self.clarifai_api_key = api_key
 
@@ -1418,5 +1423,5 @@ class InstaPy:
         self.logFile.write('-' * 20 + '\n\n')
         self.logFile.close()
 
-        with open('./logs/followed.txt', 'w') as followFile:
+        with open(os.path.join(self.logdir, 'followed.txt'), 'w') as followFile:
             followFile.write(str(self.followed))
