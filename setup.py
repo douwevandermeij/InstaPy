@@ -1,16 +1,16 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 __version__ = '0.0.1'
 __author__ = 'Tim Grossmann'
 
-requirements = [
+REQUIREMENTS = (
     'selenium==2.53.6',
     'clarifai==2.0.31',
     'pyvirtualdisplay',
     'emoji'
-]
+)
 
-description = 'Instagram Like, Comment and Follow Automation Script'
+DESCRIPTION = 'Instagram Like, Comment and Follow Automation Script'
 
 setup(
     name='instagram_py',
@@ -19,6 +19,8 @@ setup(
     author_email='contact.timgrossmann@gmail.com',
     url='https://github.com/timgrossmann/InstaPy',
     py_modules='instapy',
-    description=description,
-    install_requires=requirements
+    packages=find_packages(),
+    include_package_data=True,
+    description=DESCRIPTION,
+    install_requires=REQUIREMENTS,
 )
