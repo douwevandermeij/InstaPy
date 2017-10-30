@@ -79,13 +79,13 @@ Table of Contents
 ### Basic Installation:
 
 ```bash
+1. pip install git+https://github.com/timgrossmann/InstaPy.git
+or
 1. git clone https://github.com/timgrossmann/InstaPy.git
 2. cd InstaPy
-3. pip install .
-or
-3. python setup.py install
+3. python setup.py install (or pip install .)
 ```
-4. Download ```chromedriver``` for your system [from here](https://sites.google.com/a/chromium.org/chromedriver/downloads). And put it in ```/assets``` folder.
+4. Make sure to have ```chromedriver``` installed on your system [from here](https://sites.google.com/a/chromium.org/chromedriver/downloads).
 
 
 ### Basic Setup
@@ -100,7 +100,7 @@ insta_password = ''
 
 # if you want to run this script on a server, 
 # simply add nogui=True to the InstaPy() constructor
-session = InstaPy(username=insta_username, password=insta_password)
+session = InstaPy(username=insta_username, password=insta_password, chromedriver_location='/usr/local/bin/chromedriver')
 session.login()
 
 # set up all the settings
