@@ -19,7 +19,7 @@ setup(
     author_email='contact.timgrossmann@gmail.com',
     url='https://github.com/timgrossmann/InstaPy',
     py_modules='instapy',
-    packages=find_packages(),
+    packages=['instapy'],
     include_package_data=True,
     description=DESCRIPTION,
     install_requires=REQUIREMENTS,
