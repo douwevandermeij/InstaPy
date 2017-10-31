@@ -48,6 +48,7 @@ class InstaPy:
                  nogui=False,
                  selenium_local_session=True,
                  use_firefox=False,
+                 use_phantomjs=False,
                  page_delay=25,
                  logdir='./logs',
                  chromedriver_location='./assets/chromedriver'):
@@ -71,6 +72,8 @@ class InstaPy:
         self.switch_language = True
         self.use_firefox = use_firefox
         self.firefox_profile_path = None
+
+        self.use_phantomjs = use_phantomjs
 
         self.do_comment = False
         self.comment_percentage = 0
@@ -129,6 +132,10 @@ class InstaPy:
 
             self.browser = webdriver.Firefox(firefox_profile=firefox_profile)
 
+        elif self.use_phantomjs:
+            self.browser = webdriver.PhantomJS()
+            self.browser.set_window_size(1120, 550)
+
         else:
             chromedriver_location = self.chromedriver_location
             chrome_options = Options()
@@ -171,6 +178,10 @@ class InstaPy:
             self.browser = webdriver.Remote(
                 command_executor=selenium_url,
                 desired_capabilities=DesiredCapabilities.FIREFOX)
+        elif self.use_phantomjs:
+            self.browser = webdriver.Remote(
+                command_executor=selenium_url,
+                desired_capabilities=DesiredCapabilities.PHANTOMJS)
         else:
             self.browser = webdriver.Remote(
                 command_executor=selenium_url,

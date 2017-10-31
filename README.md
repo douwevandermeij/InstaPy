@@ -86,6 +86,7 @@ or
 3. python setup.py install (or pip install .)
 ```
 4. Make sure to have ```chromedriver``` installed on your system [from here](https://sites.google.com/a/chromium.org/chromedriver/downloads).
+5. As an alternative to Chrome you could also install ```PhantomJS``` for headless execution of the script, checkout the [website](http://phantomjs.org/).
 
 
 ### Basic Setup
