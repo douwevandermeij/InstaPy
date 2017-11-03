@@ -51,7 +51,8 @@ class InstaPy:
                  use_phantomjs=False,
                  page_delay=25,
                  logdir='./logs',
-                 chromedriver_location='./assets/chromedriver'):
+                 chromedriver_location='./assets/chromedriver',
+                 important_users=None):
 
         if nogui:
             self.display = Display(visible=0, size=(800, 600))
@@ -63,6 +64,7 @@ class InstaPy:
         self.logFile = open(os.path.join(self.logdir, 'logFile.txt'), 'a')
 
         self.chromedriver_location = chromedriver_location
+        self.important_users = important_users or []
 
         self.username = username or os.environ.get('INSTA_USER')
         self.password = password or os.environ.get('INSTA_PW')
@@ -1291,10 +1293,31 @@ class InstaPy:
                                     username = (self.browser.
                                                 find_element_by_xpath(
                                                     "//main//div//div//article"
-                                                    "//header//div//a"))
+                                                    "//header/div[2]//a"))
                                     username = username.get_attribute("title")
                                     name = []
                                     name.append(username)
+
+                                    if username in self.important_users:
+                                        # click likes
+                                        self.browser.find_element_by_xpath(
+                                            "//main//div//div//article"
+                                            "//div[2]/section[2]/div/a"
+                                        ).click()
+
+                                        # find likers
+                                        likers = [
+                                            liker.get_attribute('title')
+                                            for liker in self.browser.find_elements_by_xpath(
+                                                "//div[@class='_ntka7']//li/div/div/div/div/a"
+                                            )
+                                        ]
+
+                                        # like some posts from likers
+                                        for liker in likers:
+                                            if liker not in [username, self.username]:
+                                                self.like_by_users([liker], amount=2)
+
 
                                     if interact:
                                         print('--> User followed: {}'.format(
