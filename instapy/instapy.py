@@ -1225,7 +1225,8 @@ class InstaPy:
                      amount=50,
                      randomize=False,
                      unfollow=False,
-                     interact=False):
+                     interact=False,
+                     like_likers_amount=2):
         """Like the users feed"""
 
         if self.aborting:
@@ -1316,7 +1317,7 @@ class InstaPy:
                                         # like some posts from likers
                                         for liker in likers:
                                             if liker not in [username, self.username]:
-                                                self.like_by_users([liker], amount=2)
+                                                self.like_by_users([liker], amount=like_likers_amount)
 
 
                                     if interact:
