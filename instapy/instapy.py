@@ -715,7 +715,7 @@ class InstaPy:
                                         self.username, username)
             else:
                 print('--> Not following')
-                sleep(1)
+                # sleep(1)
 
             if links is False:
                 continue
@@ -789,7 +789,7 @@ class InstaPy:
                                                            comments)
                             else:
                                 print('--> Not commented')
-                                sleep(1)
+                                # sleep(1)
 
                         else:
                             already_liked += 1
@@ -1271,7 +1271,7 @@ class InstaPy:
                         history.append(link)
                         print('[{} posts liked /{} amount]'
                               .format(liked_img, amount))
-                        self.logFile.write('[{}/{} links feched to be tested]'
+                        self.logFile.write('[{}/{} links fetched to be tested]'
                                            .format(i + 1, len(links)))
                         self.logFile.write(link)
 
@@ -1374,7 +1374,7 @@ class InstaPy:
                                             self.browser, comments)
                                     else:
                                         print('--> Not commented')
-                                        sleep(1)
+                                        # sleep(1)
 
                                     if (self.do_follow and
                                         user_name not in self.dont_include and
@@ -1389,7 +1389,7 @@ class InstaPy:
                                             user_name)
                                     else:
                                         print('--> Not following')
-                                        sleep(1)
+                                        # sleep(1)
                                 else:
                                     already_liked += 1
                             else:

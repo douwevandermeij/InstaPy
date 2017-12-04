@@ -341,7 +341,7 @@ def check_link(browser,
                like_by_followers_lower_limit):
 
     browser.get(link)
-    sleep(2)
+    # sleep(2)
 
     """Check if the Post is Valid/Exists"""
     post_page = browser.execute_script(
@@ -408,12 +408,12 @@ def check_link(browser,
     if like_by_followers_upper_limit or like_by_followers_lower_limit:
         userlink = 'https://www.instagram.com/' + user_name
         browser.get(userlink)
-        sleep(1)
+        # sleep(1)
         num_followers = browser.execute_script(
             "return window._sharedData.entry_data."
             "ProfilePage[0].user.followed_by.count")
         browser.get(link)
-        sleep(1)
+        # sleep(1)
         print('Number of Followers: {}'.format(num_followers))
 
         if like_by_followers_upper_limit and \
@@ -458,15 +458,19 @@ def check_link(browser,
 
 def like_image(browser):
     """Likes the browser opened image"""
-    like_elem = browser.find_elements_by_xpath(
-        "//a[@role='button']/span[text()='Like']/..")
-    liked_elem = browser.find_elements_by_xpath(
-        "//a[@role='button']/span[text()='Unlike']")
+    like_elem = liked_elem = []
+    spans = [x.text.lower() for x in browser.find_elements_by_xpath("//article//a[@role='button']/span")]
+    if 'like' in spans:
+        like_elem = browser.find_elements_by_xpath(
+            "//a[@role='button']/span[text()='Like']/..")
+    if 'unlike' in spans:
+        liked_elem = browser.find_elements_by_xpath(
+            "//a[@role='button']/span[text()='Unlike']")
 
     if len(like_elem) == 1:
         like_elem[0].send_keys("\n")
         print('--> Image Liked!')
-        sleep(2)
+        sleep(1)
         return True
     elif len(liked_elem) == 1:
         print('--> Already Liked!')
