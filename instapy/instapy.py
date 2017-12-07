@@ -5,6 +5,8 @@ from datetime import datetime
 from random import randint
 from random import sample
 from math import ceil
+
+import pickle
 from pyvirtualdisplay import Display
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
@@ -211,6 +213,12 @@ class InstaPy:
         log_follower_num(self.browser, self.username)
 
         return self
+
+    def load_cookies(self):
+        self.browser.get('https://www.instagram.com')
+        cookies = pickle.load(open("cookies.pkl", "rb"))
+        for cookie in cookies:
+            self.browser.add_cookie(cookie)
 
     def set_sleep_reduce(self, percentage):
         set_sleep_percentage(percentage)
@@ -715,7 +723,7 @@ class InstaPy:
                                         self.username, username)
             else:
                 print('--> Not following')
-                # sleep(1)
+                sleep(1)
 
             if links is False:
                 continue
@@ -789,7 +797,7 @@ class InstaPy:
                                                            comments)
                             else:
                                 print('--> Not commented')
-                                # sleep(1)
+                                sleep(1)
 
                         else:
                             already_liked += 1
@@ -1374,7 +1382,7 @@ class InstaPy:
                                             self.browser, comments)
                                     else:
                                         print('--> Not commented')
-                                        # sleep(1)
+                                        sleep(1)
 
                                     if (self.do_follow and
                                         user_name not in self.dont_include and
@@ -1389,7 +1397,7 @@ class InstaPy:
                                             user_name)
                                     else:
                                         print('--> Not following')
-                                        # sleep(1)
+                                        sleep(1)
                                 else:
                                     already_liked += 1
                             else:
@@ -1460,3 +1468,6 @@ class InstaPy:
 
         with open(os.path.join(self.logdir, 'followed.txt'), 'w') as followFile:
             followFile.write(str(self.followed))
+
+    def save_cookies(self):
+        pickle.dump(self.browser.get_cookies(), open("cookies.pkl", "wb"))

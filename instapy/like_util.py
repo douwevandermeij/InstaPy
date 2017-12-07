@@ -341,7 +341,7 @@ def check_link(browser,
                like_by_followers_lower_limit):
 
     browser.get(link)
-    # sleep(2)
+    sleep(2)
 
     """Check if the Post is Valid/Exists"""
     post_page = browser.execute_script(
@@ -408,12 +408,12 @@ def check_link(browser,
     if like_by_followers_upper_limit or like_by_followers_lower_limit:
         userlink = 'https://www.instagram.com/' + user_name
         browser.get(userlink)
-        # sleep(1)
+        sleep(1)
         num_followers = browser.execute_script(
             "return window._sharedData.entry_data."
             "ProfilePage[0].user.followed_by.count")
         browser.get(link)
-        # sleep(1)
+        sleep(1)
         print('Number of Followers: {}'.format(num_followers))
 
         if like_by_followers_upper_limit and \
