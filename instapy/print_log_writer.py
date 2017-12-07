@@ -21,7 +21,7 @@ def log_follower_num(browser, username):
             json.dumps({
                 'timestamp': datetime.now().isoformat(),
                 'followers': followed_by or 0,
-            }))
+            }) + '\n')
 
 
 def log_followed_pool(login, followed):

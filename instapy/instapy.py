@@ -220,7 +220,10 @@ class InstaPy:
         for cookie in cookies:
             self.browser.add_cookie(cookie)
         print('Cookies loaded successfully!')
+
         log_follower_num(self.browser, self.username)
+
+        return self
 
     def set_sleep_reduce(self, percentage):
         set_sleep_percentage(percentage)
