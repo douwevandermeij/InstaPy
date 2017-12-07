@@ -219,6 +219,7 @@ class InstaPy:
         cookies = pickle.load(open("cookies.pkl", "rb"))
         for cookie in cookies:
             self.browser.add_cookie(cookie)
+        print('Cookies loaded successfully!')
 
     def set_sleep_reduce(self, percentage):
         set_sleep_percentage(percentage)
@@ -1471,3 +1472,4 @@ class InstaPy:
 
     def save_cookies(self):
         pickle.dump(self.browser.get_cookies(), open("cookies.pkl", "wb"))
+        print('Cookies saved successfully!')
