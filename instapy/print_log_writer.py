@@ -1,4 +1,5 @@
 """Module only used to log the number of followers to a file"""
+import json
 from datetime import datetime
 
 
@@ -14,6 +15,13 @@ def log_follower_num(browser, username):
     with open('./logs/followerNum.txt', 'a') as numFile:
         numFile.write(
             '{:%Y-%m-%d %H:%M} {}\n'.format(datetime.now(), followed_by or 0))
+
+    with open('./logs/followerNum.json', 'a') as numFile:
+        numFile.write(
+            json.dumps({
+                'timestamp': datetime.now().isoformat(),
+                'followers': followed_by or 0,
+            }))
 
 
 def log_followed_pool(login, followed):
