@@ -72,9 +72,8 @@ class InstaPy:
                  proxy_chrome_extension=None,
                  proxy_port=0,
                  bypass_suspicious_attempt=False,
-                 multi_logs=False):
+                 multi_logs=False,
                  use_phantomjs=False,
-                 page_delay=25,
                  logdir='./logs',
                  chromedriver_location='./assets/chromedriver',
                  important_users=None):
