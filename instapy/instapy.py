@@ -67,7 +67,8 @@ class InstaPy:
                  proxy_chrome_extension=None,
                  proxy_port=0,
                  bypass_suspicious_attempt=False,
-                 multi_logs=False):
+                 multi_logs=False,
+                 important_users=[]):
 
         if nogui:
             self.display = Display(visible=0, size=(800, 600))
@@ -141,6 +142,8 @@ class InstaPy:
 
         # Assign logger
         self.logger = self.get_instapy_logger(show_logs)
+
+        self.important_users = important_users
 
         if selenium_local_session:
             self.set_selenium_local_session()
@@ -1546,7 +1549,8 @@ class InstaPy:
                      amount=50,
                      randomize=False,
                      unfollow=False,
-                     interact=False):
+                     interact=False,
+                     like_likers_amount=2):
         """Like the users feed"""
 
         if self.aborting:
@@ -1616,12 +1620,33 @@ class InstaPy:
                                 if liked:
                                     username = (self.browser.
                                                 find_element_by_xpath(
-                                                    '//article/header/div[2]/'
-                                                    'div[1]/div/a'))
+                                                    '//main//div//div//article'
+                                                    '//header/div[2]//a'))
 
                                     username = username.get_attribute("title")
                                     name = []
                                     name.append(username)
+
+                                    if username in self.important_users:
+                                        # click likes
+                                        self.browser.find_element_by_xpath(
+                                            "//main//div//div//article"
+                                            "//div[2]/section[2]/div/a"
+                                        ).click()
+
+                                        # find likers
+                                        likers = [
+                                            liker.get_attribute('title')
+
+                                            for liker in self.browser.find_elements_by_xpath(
+                                                "//div[@class='_ntka7']//li/div/div/div/div/a"
+                                            )
+                                        ]
+
+                                        # like some posts from likers
+                                        for liker in likers:
+                                            if liker not in [username, self.username]:
+                                                self.like_by_users([liker], amount=like_likers_amount)
 
                                     if interact:
                                         self.logger.info(
